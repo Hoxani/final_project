@@ -68,55 +68,90 @@ import tkinter as tk
 
 
 
-class BasicGUI:
+# class BasicGUI:
+#     def __init__(self, root) -> None:
+#         self.root = root
+#         self.root.geometry("300x200")
+#         self.root.title("km/h to m/s")
+        
+        
+
+
+
+
+#         self.label = tk.Label(root, text="Enter speed.")
+#         self.label.pack(padx=10)
+# # 
+#         self.num = tk.Entry(root, justify='center')
+#         self.num.pack(pady=10)
+#         self.num.bind("<Return>", lambda event: self.convert())
+#         self.num.bind("<Key>", lambda event: self.clear_text())
+# # 
+
+#         self.feedback = tk.Label(root, text="",fg="blue")
+#         self.feedback.pack(pady=10)
+
+
+#         self.button = tk.Button(root, text="Calculate", command=self.convert)
+#         self.button.pack(pady=10)
+
+#     def convert(self):
+#         number = float(self.num.get())
+#         result = number*3.6**-1
+#         self.feedback.config(text=f"{result:.3f} m/s")
+
+#     def clear_text(self):
+#         self.feedback.config(text="")
+# # 
+# # 
+# # 
+# # 
+# # 
+# root = tk.Tk()
+# BasicGUI(root)
+# root.mainloop()
+
+
+# https://random-word-api.herokuapp.com/word?number=1
+
+
+
+# get("https://random-word-api.herokuapp.com/word?number=1")
+
+
+
+''' HANGMAN WITH GUI PROTOTYPE '''
+import requests as re 
+import random as rd
+
+class Hangman:
     def __init__(self, root) -> None:
         self.root = root
-        self.root.geometry("300x200")
-        self.root.title("km/h to m/s")
-        
-        
+        self.root.title("Hangman")
+        self.root.geometry("300x380")
+
+
+
+    def get_word(self):
+        words = []
+        try:
+            response = re.get("https://random-word-api.herokuapp.com/word?number=1")
+            response.raise_for_status()
+            self.secret_word = response.json()[0]
+        except re.RequestException as e:
+            pass
+        else:
+            self.secret_word = rd.choice(words)
+
+    
 
 
 
 
-        self.label = tk.Label(root, text="Enter speed.")
-        self.label.pack(padx=10)
-# 
-        self.num = tk.Entry(root, justify='center')
-        self.num.pack(pady=10)
-        self.num.bind("<Return>", lambda event: self.convert())
-        self.num.bind("<Key>", lambda event: self.clear_text())
-# 
-
-        self.feedback = tk.Label(root, text="",fg="blue")
-        self.feedback.pack(pady=10)
 
 
-        self.button = tk.Button(root, text="Calculate", command=self.convert)
-        self.button.pack(pady=10)
 
-    def convert(self):
-        number = float(self.num.get())
-        result = number*3.6**-1
-        self.feedback.config(text=f"{result:.3f} m/s")
-
-    def clear_text(self):
-        self.feedback.config(text="")
-# 
-# 
-# 
-# 
-# 
 root = tk.Tk()
-BasicGUI(root)
+Hangman(root)
 root.mainloop()
-
-
-
-
-
-
-
-
-
 
