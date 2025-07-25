@@ -71,7 +71,12 @@ import tkinter as tk
 class BasicGUI:
     def __init__(self, root) -> None:
         self.root = root
+        self.root.geometry("300x200")
         self.root.title("km/h to m/s")
+        
+        
+
+
 
 
         self.label = tk.Label(root, text="Enter speed.")
