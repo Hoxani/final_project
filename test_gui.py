@@ -1,128 +1,133 @@
+import requests as re 
+import random as rd
 from tkinter import ttk
 import tkinter as tk
 
-# root = Tk()
-# root.title("Distance Converter")
+# # root = Tk()
+# # root.title("Distance Converter")
 
-# mainframe = ttk.Frame(root, padding=20)
-
-
+# # mainframe = ttk.Frame(root, padding=20)
 
 
-# from tkinter import *
-# from tkinter import ttk
-# 
-# class FeetToMeters:
 
-#     def __init__(self, root):
 
-#         root.title("Feet to Meters")
+# # from tkinter import *
+# # from tkinter import ttk
+# # 
+# # class FeetToMeters:
 
-#         mainframe = ttk.Frame(root, padding="3 3 12 12")
-#         mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
-#         root.columnconfigure(0, weight=1)
-#         root.rowconfigure(0, weight=1)
+# #     def __init__(self, root):
+
+# #         root.title("Feet to Meters")
+
+# #         mainframe = ttk.Frame(root, padding="3 3 12 12")
+# #         mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
+# #         root.columnconfigure(0, weight=1)
+# #         root.rowconfigure(0, weight=1)
        
-#         self.feet = StringVar()
-#         feet_entry = ttk.Entry(mainframe, width=7, textvariable=self.feet)
-#         feet_entry.grid(column=2, row=1, sticky=(W, E))
-#         self.meters = StringVar()
+# #         self.feet = StringVar()
+# #         feet_entry = ttk.Entry(mainframe, width=7, textvariable=self.feet)
+# #         feet_entry.grid(column=2, row=1, sticky=(W, E))
+# #         self.meters = StringVar()
 
-#         ttk.Label(mainframe, textvariable=self.meters).grid(column=2, row=2, sticky=(W, E))
-#         ttk.Button(mainframe, text="Calculate", command=self.calculate).grid(column=3, row=3, sticky=W)
+# #         ttk.Label(mainframe, textvariable=self.meters).grid(column=2, row=2, sticky=(W, E))
+# #         ttk.Button(mainframe, text="Calculate", command=self.calculate).grid(column=3, row=3, sticky=W)
 
-#         ttk.Label(mainframe, text="feet").grid(column=3, row=1, sticky=W)
-#         ttk.Label(mainframe, text="is equivalent to").grid(column=1, row=2, sticky=E)
-#         ttk.Label(mainframe, text="meters").grid(column=3, row=2, sticky=W)
+# #         ttk.Label(mainframe, text="feet").grid(column=3, row=1, sticky=W)
+# #         ttk.Label(mainframe, text="is equivalent to").grid(column=1, row=2, sticky=E)
+# #         ttk.Label(mainframe, text="meters").grid(column=3, row=2, sticky=W)
 
-#         for child in mainframe.winfo_children(): 
-#             child.grid_configure(padx=5, pady=5)
+# #         for child in mainframe.winfo_children(): 
+# #             child.grid_configure(padx=5, pady=5)
 
-#         feet_entry.focus()
-#         root.bind("<Return>", self.calculate)
+# #         feet_entry.focus()
+# #         root.bind("<Return>", self.calculate)
         
-#     def calculate(self, *args):
-#         try:
-#             value = float(self.feet.get())
-#             self.meters.set(int(0.3048 * value * 10000.0 + 0.5)/10000.0)
-#         except ValueError:
-#             pass
+# #     def calculate(self, *args):
+# #         try:
+# #             value = float(self.feet.get())
+# #             self.meters.set(int(0.3048 * value * 10000.0 + 0.5)/10000.0)
+# #         except ValueError:
+# #             pass
 
-# root = Tk()
-# FeetToMeters(root)
-# root.mainloop()
-
-
-
-
-
-
-# import requests as re
-
-
-# response = re.get("https://opentdb.com/api.php?amount=10&category=11&difficulty=easy")
-# print(response.json())
+# # root = Tk()
+# # FeetToMeters(root)
+# # root.mainloop()
 
 
 
 
 
 
-# class BasicGUI:
-#     def __init__(self, root) -> None:
-#         self.root = root
-#         self.root.geometry("300x200")
-#         self.root.title("km/h to m/s")
+# # import requests as re
+
+
+# # response = re.get("https://opentdb.com/api.php?amount=10&category=11&difficulty=easy")
+# # print(response.json())
+
+
+
+
+
+
+# # class BasicGUI:
+# #     def __init__(self, root) -> None:
+# #         self.root = root
+# #         self.root.geometry("300x200")
+# #         self.root.title("km/h to m/s")
         
         
 
 
 
 
-#         self.label = tk.Label(root, text="Enter speed.")
-#         self.label.pack(padx=10)
-# # 
-#         self.num = tk.Entry(root, justify='center')
-#         self.num.pack(pady=10)
-#         self.num.bind("<Return>", lambda event: self.convert())
-#         self.num.bind("<Key>", lambda event: self.clear_text())
-# # 
+# #         self.label = tk.Label(root, text="Enter speed.")
+# #         self.label.pack(padx=10)
+# # # 
+# #         self.num = tk.Entry(root, justify='center')
+# #         self.num.pack(pady=10)
+# #         self.num.bind("<Return>", lambda event: self.convert())
+# #         self.num.bind("<Key>", lambda event: self.clear_text())
+# # # 
 
-#         self.feedback = tk.Label(root, text="",fg="blue")
-#         self.feedback.pack(pady=10)
-
-
-#         self.button = tk.Button(root, text="Calculate", command=self.convert)
-#         self.button.pack(pady=10)
-
-#     def convert(self):
-#         number = float(self.num.get())
-#         result = number*3.6**-1
-#         self.feedback.config(text=f"{result:.3f} m/s")
-
-#     def clear_text(self):
-#         self.feedback.config(text="")
-# # 
-# # 
-# # 
-# # 
-# # 
-# root = tk.Tk()
-# BasicGUI(root)
-# root.mainloop()
+# #         self.feedback = tk.Label(root, text="",fg="blue")
+# #         self.feedback.pack(pady=10)
 
 
-# https://random-word-api.herokuapp.com/word?number=1
+# #         self.button = tk.Button(root, text="Calculate", command=self.convert)
+# #         self.button.pack(pady=10)
+
+# #     def convert(self):
+# #         number = float(self.num.get())
+# #         result = number*3.6**-1
+# #         self.feedback.config(text=f"{result:.3f} m/s")
+
+# #     def clear_text(self):
+# #         self.feedback.config(text="")
+# # # 
+# # # 
+# # # 
+# # # 
+# # # 
+# # root = tk.Tk()
+# # BasicGUI(root)
+# # root.mainloop()
 
 
-
-# get("https://random-word-api.herokuapp.com/word?number=1")
+# # https://random-word-api.herokuapp.com/word?number=1
 
 
 
-''' HANGMAN WITH GUI PROTOTYPE '''
-import requests as re 
-import random as rd
+# # get("https://random-word-api.herokuapp.com/word?number=1")
+
+
+
+# ''' HANGMAN WITH GUI PROTOTYPE '''
+
+
+
+
+
 
 class Hangman:
     def __init__(self, root) -> None:
@@ -131,17 +136,81 @@ class Hangman:
         self.root.geometry("300x380")
 
 
+        self.letters_guessed = []
+
+
+        self.header = ttk.Label(root, text="WELCOME TO HANGMAN")
+        self.header.pack(padx=10, pady=10)
+
+        self.progress_bar = ttk.Label(root, text="", background="blue")
+        self.progress_bar.pack(padx=10, pady=10)
+
+
+        self.feedback = ttk.Label(root, text="hey")
+        self.feedback.pack(padx=25, pady=25)
+
+
+        self.entry = ttk.Entry(root, justify="center")
+        self.entry.pack(padx=10, pady=10)
+        self.entry.bind("<Return>", lambda event: self.letter_guess())
+        self.entry.bind("<Key>", lambda event: self.clear_text())
+
+        self.start = ttk.Button(root, text="Enter", command=self.letter_guess)
+        self.start.pack(padx=10, pady=10)
+
+
+
+
+
+
+
+
+
+
+    def start_game_wrapper(self):
+        ...
+
+    def game_progress(self):
+        ...
+
+
+
+
+
+    def clear_text(self):
+        self.feedback.config(text="")
+
+    def letter_guess(self):
+        letter = self.entry.get().strip().lower()
+        print(self.letters_guessed)
+        if len(letter) > 1:
+            self.feedback.config(text="PLease enter a single letter.")
+        else:
+            self.letters_guessed.append(letter)
+            self.feedback.config(text=letter)
 
     def get_word(self):
-        words = []
+        words = ["horizon", "candle", "whisper", "marble", "journey", "frost", "ember", "lantern", "grove", "ripple"]
         try:
             response = re.get("https://random-word-api.herokuapp.com/word?number=1")
             response.raise_for_status()
             self.secret_word = response.json()[0]
         except re.RequestException as e:
-            pass
-        else:
             self.secret_word = rd.choice(words)
+
+    def get_progress(self):
+        self.progress = []
+        for char in self.secret_word:
+            if char in self.letters_guessed:
+                self.progress.append(char)
+            else:
+                self.progress.append("*")
+        self.progress_bar.config(text="".join(self.progress))
+
+    def reveal_letters(self):
+        ...
+
+        
 
     
 
@@ -154,4 +223,3 @@ class Hangman:
 root = tk.Tk()
 Hangman(root)
 root.mainloop()
-
