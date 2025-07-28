@@ -135,27 +135,31 @@ class Hangman:
         self.root.title("Hangman")
         self.root.geometry("300x380")
 
+        self.start_game_wrapper()
+
+
 
         self.letters_guessed = []
+        self.attempts  = 10
 
 
         self.header = ttk.Label(root, text="WELCOME TO HANGMAN")
         self.header.pack(padx=10, pady=10)
 
-        self.progress_bar = ttk.Label(root, text="", background="blue")
+        self.progress_bar = ttk.Label(root, text="", foreground="blue")
         self.progress_bar.pack(padx=10, pady=10)
 
 
-        self.feedback = ttk.Label(root, text="hey")
+        self.feedback = ttk.Label(root, text=f"Guess  a letter for the secret word, the word is {len(self.secret_word)} letters long.")
         self.feedback.pack(padx=25, pady=25)
 
 
         self.entry = ttk.Entry(root, justify="center")
         self.entry.pack(padx=10, pady=10)
-        self.entry.bind("<Return>", lambda event: self.letter_guess())
-        self.entry.bind("<Key>", lambda event: self.clear_text())
+        self.entry.bind("<Return>", lambda event: self.game_progress())
+        
 
-        self.start = ttk.Button(root, text="Enter", command=self.letter_guess)
+        self.start = ttk.Button(root, text="Enter", command=self.game_progress)
         self.start.pack(padx=10, pady=10)
 
 
@@ -168,26 +172,43 @@ class Hangman:
 
 
     def start_game_wrapper(self):
-        ...
+        self.get_word()
+
 
     def game_progress(self):
-        ...
-
-
-
-
-
-    def clear_text(self):
+        self.letter_guess()
+        self.get_progress()
+        self.entry.delete(0, tk.END)
         self.feedback.config(text="")
+        # self.check_guess()
+        # self.reveal_letters()
 
+
+
+
+
+ 
+  
     def letter_guess(self):
         letter = self.entry.get().strip().lower()
-        print(self.letters_guessed)
+
+        if letter == "!":
+            self.reveal_letters()
+            return
+
+        if letter in self.letters_guessed:
+            self.feedback.config(text="Letter already guessed")
+            return
+            
         if len(letter) > 1:
             self.feedback.config(text="PLease enter a single letter.")
-        else:
+            return
+        
+        if len(letter) == 1 and letter.isalpha():
             self.letters_guessed.append(letter)
-            self.feedback.config(text=letter)
+            self.feedback.config(text="".join(self.letters_guessed))
+        else:
+            self.feedback.config(text="Invalid input")
 
     def get_word(self):
         words = ["horizon", "candle", "whisper", "marble", "journey", "frost", "ember", "lantern", "grove", "ripple"]
@@ -199,16 +220,16 @@ class Hangman:
             self.secret_word = rd.choice(words)
 
     def get_progress(self):
-        self.progress = []
-        for char in self.secret_word:
-            if char in self.letters_guessed:
-                self.progress.append(char)
-            else:
-                self.progress.append("*")
-        self.progress_bar.config(text="".join(self.progress))
+        self.progress = "".join(char if char in self.letters_guessed else "*" for char in self.secret_word)
+        self.progress_bar.config(text=self.progress)
+  
+    def check_guess(self):
+        pass
+
 
     def reveal_letters(self):
-        ...
+        pass
+        
 
         
 
