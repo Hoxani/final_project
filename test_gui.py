@@ -2,6 +2,7 @@ import requests as re
 import random as rd
 from tkinter import ttk
 import tkinter as tk
+from tkinter import messagebox
 
 # # root = Tk()
 # # root.title("Distance Converter")
@@ -135,28 +136,26 @@ class Hangman:
         self.root.title("Hangman")
         self.root.geometry("300x380")
 
-        self.start_game_wrapper()
-
-
-
         self.letters_guessed = []
-        self.attempts  = 10
+        self.guesses  = 10
+        self.get_word()
 
 
         self.header = ttk.Label(root, text="WELCOME TO HANGMAN")
         self.header.pack(padx=10, pady=10)
 
-        self.progress_bar = ttk.Label(root, text="", foreground="blue")
+        self.progress_bar = ttk.Label(root, text=f"I am thinking of a word that is {len(self.secret_word)} long.", foreground="blue")
         self.progress_bar.pack(padx=10, pady=10)
 
 
-        self.feedback = ttk.Label(root, text=f"Guess  a letter for the secret word, the word is {len(self.secret_word)} letters long.")
+        self.feedback = ttk.Label(root, text="Please guess a letter.")
         self.feedback.pack(padx=25, pady=25)
 
 
         self.entry = ttk.Entry(root, justify="center")
         self.entry.pack(padx=10, pady=10)
         self.entry.bind("<Return>", lambda event: self.game_progress())
+        self.entry.bind("<Key>", lambda event: self.clear_feed())
         
 
         self.start = ttk.Button(root, text="Enter", command=self.game_progress)
@@ -167,48 +166,52 @@ class Hangman:
 
 
 
-
-
-
-
-    def start_game_wrapper(self):
-        self.get_word()
-
-
     def game_progress(self):
-        self.letter_guess()
+        self.game_logic()
         self.get_progress()
         self.entry.delete(0, tk.END)
+         
+        if self.has_player_won():
+            self.score_calculator()
+            messagebox.showinfo("🎉 Correct!",f"your score is {self.score}.")
+            self.reset_game()
+        elif self.guesses ==0:
+            messagebox.showinfo(f"You have ran out of guesses, the sceret word was {self.secret_word}.")                  
+            self.reset_game()
+     
+
+    def clear_feed(self):
         self.feedback.config(text="")
-        # self.check_guess()
-        # self.reveal_letters()
-
-
-
-
-
- 
-  
-    def letter_guess(self):
+        
+    def game_logic(self):
         letter = self.entry.get().strip().lower()
 
         if letter == "!":
-            self.reveal_letters()
-            return
-
-        if letter in self.letters_guessed:
-            self.feedback.config(text="Letter already guessed")
-            return
-            
-        if len(letter) > 1:
-            self.feedback.config(text="PLease enter a single letter.")
-            return
-        
-        if len(letter) == 1 and letter.isalpha():
-            self.letters_guessed.append(letter)
-            self.feedback.config(text="".join(self.letters_guessed))
+            letter_revealed = self.reveal_letters()
+            self.guesses -= 3
+            self.letters_guessed.append(letter_revealed)
         else:
-            self.feedback.config(text="Invalid input")
+        
+            if letter in self.letters_guessed:
+                self.feedback.config(text="Letter already guessed")
+                return
+
+            if len(letter) > 1:
+                self.feedback.config(text="PLease enter a single letter.")
+                return
+
+            if letter in self.secret_word:
+                self.feedback.config(text="✅ Correct.")
+            else:
+                self.feedback.config(text="❌ Incorrect, try again.")
+                self.guesses -= 1
+
+            if len(letter) == 1 and letter.isalpha():
+                self.letters_guessed.append(letter)
+            else:
+                self.feedback.config(text="Invalid input")
+
+        self.header.config(text=f"You have {self.guesses} guesses left.")
 
     def get_word(self):
         words = ["horizon", "candle", "whisper", "marble", "journey", "frost", "ember", "lantern", "grove", "ripple"]
@@ -218,18 +221,35 @@ class Hangman:
             self.secret_word = response.json()[0]
         except re.RequestException as e:
             self.secret_word = rd.choice(words)
+        print(self.secret_word)
 
     def get_progress(self):
         self.progress = "".join(char if char in self.letters_guessed else "*" for char in self.secret_word)
         self.progress_bar.config(text=self.progress)
-  
-    def check_guess(self):
-        pass
 
+    def has_player_won(self):
+        return all(char in self.letters_guessed for char in self.secret_word)
+ 
+    def score_calculator(self):
+        unique_correct = len(set(char for char in self.letters_guessed if char in self.secret_word))
+        self.score = (self.guesses + 4 * unique_correct) + (3 * len(self.secret_word))    
 
     def reveal_letters(self):
-        pass
-        
+        if self.guesses >= 3:
+            self.unrevealed_letters = [char for char in self.secret_word if char not in self.letters_guessed]
+            letter = rd.choice(self.unrevealed_letters)
+            self.feedback.config(text=f"Letter revealed: {letter}.")
+            return letter
+        else:
+            self.feedback.config(text="Oops! Not enough guesses left")        
+
+    def reset_game(self):
+        self.letters_guessed = []
+        self.guesses = 10
+        self.get_word()
+        self.header.config(text="WELCOME TO HANGMAN")
+        self.feedback.config(text="Please guess a letter.")
+        self.progress_bar.config( text=f"I am thinking of a word that is {len(self.secret_word)} long.", foreground="blue")
 
         
 
