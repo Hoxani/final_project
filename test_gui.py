@@ -4,126 +4,8 @@ from tkinter import ttk
 import tkinter as tk
 from tkinter import messagebox
 
-# # root = Tk()
-# # root.title("Distance Converter")
 
-# # mainframe = ttk.Frame(root, padding=20)
-
-
-
-
-# # from tkinter import *
-# # from tkinter import ttk
-# # 
-# # class FeetToMeters:
-
-# #     def __init__(self, root):
-
-# #         root.title("Feet to Meters")
-
-# #         mainframe = ttk.Frame(root, padding="3 3 12 12")
-# #         mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
-# #         root.columnconfigure(0, weight=1)
-# #         root.rowconfigure(0, weight=1)
-       
-# #         self.feet = StringVar()
-# #         feet_entry = ttk.Entry(mainframe, width=7, textvariable=self.feet)
-# #         feet_entry.grid(column=2, row=1, sticky=(W, E))
-# #         self.meters = StringVar()
-
-# #         ttk.Label(mainframe, textvariable=self.meters).grid(column=2, row=2, sticky=(W, E))
-# #         ttk.Button(mainframe, text="Calculate", command=self.calculate).grid(column=3, row=3, sticky=W)
-
-# #         ttk.Label(mainframe, text="feet").grid(column=3, row=1, sticky=W)
-# #         ttk.Label(mainframe, text="is equivalent to").grid(column=1, row=2, sticky=E)
-# #         ttk.Label(mainframe, text="meters").grid(column=3, row=2, sticky=W)
-
-# #         for child in mainframe.winfo_children(): 
-# #             child.grid_configure(padx=5, pady=5)
-
-# #         feet_entry.focus()
-# #         root.bind("<Return>", self.calculate)
-        
-# #     def calculate(self, *args):
-# #         try:
-# #             value = float(self.feet.get())
-# #             self.meters.set(int(0.3048 * value * 10000.0 + 0.5)/10000.0)
-# #         except ValueError:
-# #             pass
-
-# # root = Tk()
-# # FeetToMeters(root)
-# # root.mainloop()
-
-
-
-
-
-
-# # import requests as re
-
-
-# # response = re.get("https://opentdb.com/api.php?amount=10&category=11&difficulty=easy")
-# # print(response.json())
-
-
-
-
-
-
-# # class BasicGUI:
-# #     def __init__(self, root) -> None:
-# #         self.root = root
-# #         self.root.geometry("300x200")
-# #         self.root.title("km/h to m/s")
-        
-        
-
-
-
-
-# #         self.label = tk.Label(root, text="Enter speed.")
-# #         self.label.pack(padx=10)
-# # # 
-# #         self.num = tk.Entry(root, justify='center')
-# #         self.num.pack(pady=10)
-# #         self.num.bind("<Return>", lambda event: self.convert())
-# #         self.num.bind("<Key>", lambda event: self.clear_text())
-# # # 
-
-# #         self.feedback = tk.Label(root, text="",fg="blue")
-# #         self.feedback.pack(pady=10)
-
-
-# #         self.button = tk.Button(root, text="Calculate", command=self.convert)
-# #         self.button.pack(pady=10)
-
-# #     def convert(self):
-# #         number = float(self.num.get())
-# #         result = number*3.6**-1
-# #         self.feedback.config(text=f"{result:.3f} m/s")
-
-# #     def clear_text(self):
-# #         self.feedback.config(text="")
-# # # 
-# # # 
-# # # 
-# # # 
-# # # 
-# # root = tk.Tk()
-# # BasicGUI(root)
-# # root.mainloop()
-
-
-# # https://random-word-api.herokuapp.com/word?number=1
-
-
-
-# # get("https://random-word-api.herokuapp.com/word?number=1")
-
-
-
-# ''' HANGMAN WITH GUI PROTOTYPE '''
+''' HANGMAN WITH GUI PROTOTYPE '''
 
 
 
@@ -200,16 +82,26 @@ class Hangman:
                 self.feedback.config(text="PLease enter a single letter.")
                 return
 
+            if len(letter) == 1 and letter.isalpha():
+                self.letters_guessed.append(letter)
+            else:
+                self.feedback.config(
+                    text="Oops! That is not a valid letter.",
+                    wraplength=150,
+                    justify='left'
+                    )
+                return 
+            
             if letter in self.secret_word:
                 self.feedback.config(text="✅ Correct.")
             else:
                 self.feedback.config(text="❌ Incorrect, try again.")
                 self.guesses -= 1
+                vowels = "aeiou"
+                if letter in vowels:
+                    self.guesses -= 1
 
-            if len(letter) == 1 and letter.isalpha():
-                self.letters_guessed.append(letter)
-            else:
-                self.feedback.config(text="Invalid input")
+
 
         self.header.config(text=f"You have {self.guesses} guesses left.")
 
@@ -260,7 +152,12 @@ class Hangman:
 
 
 
+def main():
+    root = tk.Tk()
+    Hangman(root)
+    root.mainloop()
 
-root = tk.Tk()
-Hangman(root)
-root.mainloop()
+
+
+if __name__ == "__main__":
+    main()
