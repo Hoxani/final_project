@@ -1,10 +1,7 @@
-def test_function_1():
-    ...
+from project import Hangman
+import tkinter as tk
 
 
-def test_function_2():
-    ...
 
 
-def test_function_n():
-    ...
+
